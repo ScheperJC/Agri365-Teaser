@@ -1301,26 +1301,22 @@ window.addEventListener('beforeinstallprompt', function(e) {
     if (b) b.style.display = 'block';
 
 // ── SCROLL ANIMATIONS ──────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
-  var style = document.createElement('style');
-  style.textContent = '.anim-fade{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}.anim-fade.visible{opacity:1;transform:translateY(0);}';
-  document.head.appendChild(style);
-
-  // Hero slide-up bij laden
+window.addEventListener('load', function() {
   var heroH = document.querySelector('.hero-h1');
   if (heroH) {
-    heroH.style.cssText += 'opacity:0;transform:translateY(40px);transition:opacity 0.9s ease,transform 0.9s ease;';
+    heroH.style.opacity = '0';
+    heroH.style.transform = 'translateY(40px)';
+    heroH.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
     setTimeout(function(){ heroH.style.opacity='1'; heroH.style.transform='translateY(0)'; }, 300);
   }
 
-  // Fade-in bij scrollen
-  var targets = document.querySelectorAll('section:not(.hero)');
-  targets.forEach(function(el) { el.classList.add('anim-fade'); });
+  document.querySelectorAll('section:not(.hero)').forEach(function(el) {
+    el.classList.add('anim-fade');
+  });
 
   function checkVisible() {
-    targets.forEach(function(el) {
-      var rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 60) {
+    document.querySelectorAll('.anim-fade').forEach(function(el) {
+      if (el.getBoundingClientRect().top < window.innerHeight - 60) {
         el.classList.add('visible');
       }
     });
