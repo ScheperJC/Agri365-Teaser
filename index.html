@@ -478,6 +478,17 @@ footer { padding: 56px 28px 36px; border-top: 1px solid var(--border); }
 </style>
 </head>
 <body>
+<!-- COOKIE BANNER -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;background:rgba(9,12,10,0.97);border-top:1px solid #222e23;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+  <div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:#3dba65;letter-spacing:0.12em;margin-bottom:4px;">🍪 COOKIES & PRIVACY</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:#6a9470;line-height:1.6;max-width:600px;">AGRI·365 uses localStorage for farm data persistence. No tracking cookies. No advertising. <a href="https://www.scheper.co/wp-content/uploads/2026/03/Privacy-Policy-Scheper.Co-English.pdf" target="_blank" style="color:#3dba65;">Privacy Policy ↗</a></div>
+  </div>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="acceptCookies()" style="padding:8px 20px;background:#3dba65;border:none;border-radius:2px;color:#090c0a;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:0.1em;cursor:pointer;">ACCEPT</button>
+    <button onclick="declineCookies()" style="padding:8px 16px;background:transparent;border:1px solid #222e23;border-radius:2px;color:#6a9470;font-family:'IBM Plex Mono',monospace;font-size:9px;cursor:pointer;">DECLINE</button>
+  </div>
+</div>
 
 <!-- LANG -->
 <div class="lang-bar">
@@ -1351,5 +1362,24 @@ window.addEventListener('load', function() {
   }, { threshold: 0.1 });
 
   cards.forEach(function(el) { cardObs.observe(el); });
+});
+</script>
+<script>
+// ── COOKIE BANNER ──────────────────────────────────────────
+function acceptCookies() {
+  localStorage.setItem('agri365_cookies', 'accepted');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+function declineCookies() {
+  localStorage.setItem('agri365_cookies', 'declined');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+window.addEventListener('load', function() {
+  var consent = localStorage.getItem('agri365_cookies');
+  if (!consent) {
+    setTimeout(function() {
+      document.getElementById('cookie-banner').style.display = 'flex';
+    }, 1500);
+  }
 });
 </script>
