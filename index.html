@@ -1324,3 +1324,29 @@ window.addEventListener('load', function() {
   document.querySelectorAll('[data-count]').forEach(function(el) { countObs.observe(el); });
 });
 </script>
+<script>
+// ── KAARTEN ANIMATIE ──────────────────────────────────────────
+window.addEventListener('load', function() {
+  var cards = document.querySelectorAll('.price-card, .mod-card, .pilot-card, .usp-card');
+  cards.forEach(function(el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  });
+
+  var cardObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      var index = Array.from(cards).indexOf(el);
+      setTimeout(function() {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, (index % 4) * 120);
+      cardObs.unobserve(el);
+    });
+  }, { threshold: 0.1 });
+
+  cards.forEach(function(el) { cardObs.observe(el); });
+});
+</script>
