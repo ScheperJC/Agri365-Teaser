@@ -1312,7 +1312,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Fade-in bij scrollen
-  var targets = document.querySelectorAll('.sec-h2, .price-card, .mod-card, .portal-feat, .pilot-card');
+  var targets = document.querySelectorAll('section:not(.hero)');
   targets.forEach(function(el) { el.classList.add('anim-fade'); });
 
   function checkVisible() {
