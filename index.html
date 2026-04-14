@@ -1302,7 +1302,7 @@ window.addEventListener('beforeinstallprompt', function(e) {
 document.addEventListener('DOMContentLoaded', function() {
   // Fade-in bij scrollen
   var style = document.createElement('style');
-  style.textContent = '.anim-fade{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}.anim-fade.visible{opacity:1;transform:translateY(0);}';
+  style.textContent = '.anim-fade{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}.anim-fade.visible{opacity:1 !important;transform:translateY(0) !important;}';
   document.head.appendChild(style);
 
   // Voeg animatie toe aan secties en kaarten
@@ -1318,7 +1318,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Intersection Observer voor scroll
   var obs = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.15 });
   document.querySelectorAll('.anim-fade').forEach(function(el) { obs.observe(el); });
 
   // Cijfers optellen
