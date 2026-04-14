@@ -472,8 +472,6 @@ footer { padding: 56px 28px 36px; border-top: 1px solid var(--border); }
   .stats-strip { flex-wrap: wrap; }
   .tech-row { flex-wrap: wrap; }
 }
-.anim-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.anim-fade.visible { opacity: 1 !important; transform: translateY(0) !important; }
 </style>
 </head>
 <body>
@@ -1299,29 +1297,3 @@ window.addEventListener('beforeinstallprompt', function(e) {
   setTimeout(function() {
     var b = document.getElementById('pwa-banner');
     if (b) b.style.display = 'block';
-
-// ── SCROLL ANIMATIONS ──────────────────────────────────────────
-window.addEventListener('load', function() {
-  var heroH = document.querySelector('.hero-h1');
-  if (heroH) {
-    heroH.style.opacity = '0';
-    heroH.style.transform = 'translateY(40px)';
-    heroH.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
-    setTimeout(function(){ heroH.style.opacity='1'; heroH.style.transform='translateY(0)'; }, 300);
-  }
-
-  document.querySelectorAll('section:not(.hero)').forEach(function(el) {
-    el.classList.add('anim-fade');
-  });
-
-  function checkVisible() {
-    document.querySelectorAll('.anim-fade').forEach(function(el) {
-      if (el.getBoundingClientRect().top < window.innerHeight - 60) {
-        el.classList.add('visible');
-      }
-    });
-  }
-
-  window.addEventListener('scroll', checkVisible);
-  checkVisible();
-});
