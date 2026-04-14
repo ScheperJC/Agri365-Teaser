@@ -1297,3 +1297,48 @@ window.addEventListener('beforeinstallprompt', function(e) {
   setTimeout(function() {
     var b = document.getElementById('pwa-banner');
     if (b) b.style.display = 'block';
+
+// ── SCROLL ANIMATIONS ──────────────────────────────────────────
+(function() {
+  // Fade-in bij scrollen
+  var style = document.createElement('style');
+  style.textContent = '.anim-fade{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}.anim-fade.visible{opacity:1;transform:translateY(0);}';
+  document.head.appendChild(style);
+
+  // Voeg animatie toe aan secties en kaarten
+  document.querySelectorAll('section, .price-card, .mod-card, .portal-feat').forEach(function(el, i) {
+    el.classList.add('anim-fade');
+    el.style.transitionDelay = (i % 4) * 0.1 + 's';
+  });
+
+  // Hero tekst slide-up
+  var heroH = document.querySelector('.hero h1');
+  if (heroH) { heroH.style.opacity='0'; heroH.style.transform='translateY(40px)'; heroH.style.transition='opacity 0.9s ease, transform 0.9s ease'; setTimeout(function(){ heroH.style.opacity='1'; heroH.style.transform='translateY(0)'; }, 300); }
+
+  // Intersection Observer voor scroll
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.anim-fade').forEach(function(el) { obs.observe(el); });
+
+  // Cijfers optellen
+  function animateCount(el, target, duration) {
+    var start = 0, step = target / (duration / 16);
+    var timer = setInterval(function() {
+      start += step;
+      if (start >= target) { start = target; clearInterval(timer); }
+      el.textContent = Math.floor(start) + (el.dataset.suffix || '');
+    }, 16);
+  }
+  var countObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var el = e.target;
+        var val = parseInt(el.dataset.count);
+        if (val) animateCount(el, val, 1500);
+        countObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(function(el) { countObs.observe(el); });
+})();
