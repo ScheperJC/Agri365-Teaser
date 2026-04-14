@@ -1302,8 +1302,8 @@ window.addEventListener('beforeinstallprompt', function(e) {
 
 // ── CIJFERS OPTELLEN ──────────────────────────────────────────
 window.addEventListener('load', function() {
+  console.log('CIJFERS SCRIPT GELADEN');
   var countObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
       if (!e.isIntersecting) return;
       var el = e.target;
       var target = parseInt(el.dataset.count);
