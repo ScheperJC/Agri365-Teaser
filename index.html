@@ -1300,45 +1300,30 @@ window.addEventListener('beforeinstallprompt', function(e) {
 
 // ── SCROLL ANIMATIONS ──────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
-  // Fade-in bij scrollen
   var style = document.createElement('style');
-  style.textContent = '.anim-fade{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}.anim-fade.visible{opacity:1 !important;transform:translateY(0) !important;}';
+  style.textContent = '.anim-fade{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}.anim-fade.visible{opacity:1;transform:translateY(0);}';
   document.head.appendChild(style);
 
-  // Voeg animatie toe aan secties en kaarten
-  document.querySelectorAll('section, .price-card, .mod-card, .portal-feat').forEach(function(el, i) {
-    el.classList.add('anim-fade');
-    el.style.transitionDelay = (i % 4) * 0.1 + 's';
-  });
-
-  // Hero tekst slide-up
+  // Hero slide-up bij laden
   var heroH = document.querySelector('.hero-h1');
-  if (heroH) { heroH.style.opacity='0'; heroH.style.transform='translateY(40px)'; heroH.style.transition='opacity 0.9s ease, transform 0.9s ease'; setTimeout(function(){ heroH.style.opacity='1'; heroH.style.transform='translateY(0)'; }, 300); }
-
-  // Intersection Observer voor scroll
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.anim-fade').forEach(function(el) { obs.observe(el); });
-
-  // Cijfers optellen
-  function animateCount(el, target, duration) {
-    var start = 0, step = target / (duration / 16);
-    var timer = setInterval(function() {
-      start += step;
-      if (start >= target) { start = target; clearInterval(timer); }
-      el.textContent = Math.floor(start) + (el.dataset.suffix || '');
-    }, 16);
+  if (heroH) {
+    heroH.style.cssText += 'opacity:0;transform:translateY(40px);transition:opacity 0.9s ease,transform 0.9s ease;';
+    setTimeout(function(){ heroH.style.opacity='1'; heroH.style.transform='translateY(0)'; }, 300);
   }
-  var countObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        var el = e.target;
-        var val = parseInt(el.dataset.count);
-        if (val) animateCount(el, val, 1500);
-        countObs.unobserve(el);
+
+  // Fade-in bij scrollen
+  var targets = document.querySelectorAll('.sec-h2, .price-card, .mod-card, .portal-feat, .pilot-card');
+  targets.forEach(function(el) { el.classList.add('anim-fade'); });
+
+  function checkVisible() {
+    targets.forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 60) {
+        el.classList.add('visible');
       }
     });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('[data-count]').forEach(function(el) { countObs.observe(el); });
+  }
+
+  window.addEventListener('scroll', checkVisible);
+  checkVisible();
 });
