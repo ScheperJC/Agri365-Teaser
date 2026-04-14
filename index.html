@@ -472,6 +472,8 @@ footer { padding: 56px 28px 36px; border-top: 1px solid var(--border); }
   .stats-strip { flex-wrap: wrap; }
   .tech-row { flex-wrap: wrap; }
 }
+.anim-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.anim-fade.visible { opacity: 1 !important; transform: translateY(0) !important; }
 </style>
 </head>
 <body>
