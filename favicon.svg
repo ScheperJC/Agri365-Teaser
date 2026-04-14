@@ -1,0 +1,14 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bluegrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0C447C"/>
+      <stop offset="40%" stop-color="#3B5FDB"/>
+      <stop offset="60%" stop-color="#3B5FDB"/>
+      <stop offset="100%" stop-color="#0C447C"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="10" fill="#090c0a"/>
+  <text x="8" y="28" font-family="Montserrat,sans-serif" font-weight="900" font-size="16" fill="white" letter-spacing="1">AGRI</text>
+  <rect x="8" y="32" width="48" height="2" rx="1" fill="url(#bluegrad)"/>
+  <text x="8" y="50" font-family="'IBM Plex Mono',monospace" font-weight="700" font-size="18" fill="#3dba65">365_</text>
+</svg>
